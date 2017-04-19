@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="move.js"></script>
+		<style type="text/css">
+			body {
+				background: #D9D1CB;
+				margin: 0;
+			}
+			ul, li {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.box {
+				width: 1200px;
+				height: 800px;
+				margin: 0 auto;
+				position: relative;
+				background: url(images/study-1200.jpg) no-repeat;
+			}
+			.content {
+				position: absolute;
+				width: 400px;
+				top: 200px;
+				left: 50px;
+			}
+			li {
+				height: 40px;
+				padding: 0 10px 0 10px;
+				margin-bottom: 6px;
+				background: #745857;
+				border-radius: 6px;
+				line-height: 40px;
+				position: relative;
+			}
+			.name {
+				float: left;
+				font-family: simhei;
+				color: white;
+				font-size: 18px;
+			}
+			.btn {
+				float: right;
+				display: inline-block;
+			}
+			.btn span {
+				text-align: center;
+				/*margin-top: 3px;*/
+				vertical-align: middle;
+				line-height: 30px;
+				margin-right: 6px;
+				display: inline-block;
+				border-radius: 6px;
+				background: #EFEEF4;
+				width: 50px;
+				height: 30px;
+				cursor: pointer;
+				border: 1px solid #1A222D;
+			}
+			.btn span:hover {
+				background: mediumpurple;
+				color: white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<ul class="content">
+				<li>
+					<span class="name">Happy New Year to yo</span>
+					<div class="btn">
+						<span>上移</span>
+						<span>下移</span>
+					</div>
+				</li>
+				<li>
+					<span class="name">Happy birthday to you!</span>
+					<div class="btn">
+						<span>上移</span>
+						<span>下移</span>
+					</div>
+				</li>
+				<li>
+					<span class="name">There was genuine joy</span>
+					<div class="btn">
+						<span>上移</span>
+						<span>下移</span>
+					</div>
+				</li>
+				<li>
+					<span class="name">happy cheerful glad</span>
+					<div class="btn">
+						<span>上移</span>
+						<span>下移</span>
+					</div>
+				</li>
+				<li>
+					<span class="name">a joyous family </span>
+					<div class="btn">
+						<span>上移</span>
+						<span>下移</span>
+					</div>
+				</li>
+				<li>
+					<span class="name">She is a happy girl. </span>
+					<div class="btn">
+						<span>上移</span>
+						<span>下移</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var ul = document.getElementsByTagName('ul')[0];
+		var lis = ul.children; //获取到所有的li
+		var tips = document.getElementsByClassName('tips');
+
+		for(var i = 0; i < lis.length; i++) {
+			var preMove = lis[i].children[1].children[0]; //上移按钮
+			var downMove = lis[i].children[1].children[1]; //下移按钮
+
+			//点击上移
+			preMove.onclick = function() {
+				var thisLi = this.parentElement.parentElement; //当前点击的li
+				var preLi = this.parentElement.parentElement.previousElementSibling; //当前点击的li的上一个
+
+				if(!preLi) { //当没有上一个元素时 停止运行
+					return;
+				} else {
+					move(thisLi, {top: -46}, 300, 'linear', end)
+					move(preLi, {top: 46}, 300, 'linear', end)
+				}
+
+				//调换位置
+				function end() {
+					thisLi.style.top = 0;
+					preLi.style.top = 0;
+					ul.insertBefore(thisLi, preLi);
+				}
+			};
+
+			//点击下移
+			downMove.onclick = function() {
+				var thisLi = this.parentElement.parentElement; //当前点击的li
+				var nextLi = this.parentElement.parentElement.nextElementSibling; //当前点击的li的下一个
+
+				if(!nextLi) { //当没有下一个元素时，停止
+					console.log('没有下一个了');
+					return;
+				} else {
+					move(thisLi, {top: 46}, 300, 'linear', end)
+					move(nextLi, {top: -46}, 300, 'linear', end)
+				}
+				//调换位置
+				function end() {
+					thisLi.style.top = 0;
+					nextLi.style.top = 0;
+					ul.insertBefore(nextLi,thisLi );
+				}
+			};
+		}
+	</script>
+
+</html>
