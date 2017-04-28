@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.img {
+				margin: 20px auto;
+				width: 730px;
+				height: 454px;
+				background: url(img/1.jpg);
+				position: relative;
+				transition: 1s;
+			}
+			
+			a {
+				text-decoration: none;
+				font-size: 50px;
+				color: white;
+				width: 50px;
+				background: rgba(0, 0, 0, 0.5);
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				margin-top: -25px;
+			}
+			
+			a:nth-child(1) {
+				left: 10px;
+			}
+			
+			a:nth-child(2) {
+				right: 10px;
+			}
+			
+			a:hover {
+				background: rgba(0, 0, 0, 0.7);
+			}
+			
+			ul {
+				position: absolute;
+				bottom: 8px;
+				left: 50%;
+				padding: 0;
+				margin-left: -96px;
+			}
+			
+			.cicle {
+				width: 25px;
+				height: 25px;
+				border-radius: 50%;
+				float: left;
+				background: white;
+				list-style: none;
+				margin-right: 6px;
+				cursor: pointer;
+				transition: 1s;
+				position: relative;
+			}
+			span{
+				position: absolute;
+				top: -108px;
+				left: -60px;
+				width: 150px;
+				height: 120px;
+				display: none;
+				background-image: url(img/1.jpg);
+				background-repeat: no-repeat;
+				background-size: 150px;
+			}
+			i{
+				position: absolute;
+				top: 94px;
+  				left: 60px;
+				border:12px solid rgba(0,0,0,0);
+				border-top-color: #f1bc08;
+				
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="img">
+			<a href="javascript:;"><</a>
+			<a href="javascript:;">></a>
+			<ul></ul>
+		</div>
+
+		<script type="text/javascript">
+			//获取元素
+			var img = document.querySelector(".img");
+			var pre = document.querySelector("a:nth-child(1)");
+			var next = document.querySelector("a:nth-child(2)");
+			var ul = document.querySelector("ul");
+			var lis = document.getElementsByTagName("li");
+			var spanImg = document.getElementsByTagName("span");
+
+			//定义图片数组
+			var imgArr = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
+
+			var num = 0;
+
+			//点击下一张图标箭头
+			next.onclick = function() {
+				lis[num].style.background = "";
+				num++;
+				if(num > imgArr.length - 1) {
+					num = 0;
+				}
+				img.style.background = 'url(img/' + imgArr[num] + ')';
+				lis[num].style.background = "gray";
+			};
+
+			//点击上一张图标箭头
+			pre.onclick = function() {
+				lis[num].style.background = "";
+				num--;
+				if(num < 0) {
+					num = imgArr.length - 1;
+				}
+				img.style.backgroundImage = 'url(img/' + imgArr[num] + ')';
+				lis[num].style.background = "gray";
+			};
+
+			//生成底部圆点
+			var cicle = '';
+			for(var i = 0; i < imgArr.length; i++) {
+				cicle += '<li class ="cicle"><span><i></i></span></li>';
+			}
+			ul.innerHTML = cicle;
+			lis[0].style.background = "gray";
+
+			//给每个圆点添加点击事件    
+			for(var i = 0; i < lis.length; i++) {
+				console.log(i)
+				lis[i].index = i;
+				lis[i].onclick = function() {
+					for(var i = 0; i < lis.length; i++) {
+						lis[i].style.background = "";
+					}
+					this.style.background = "gray";
+					img.style.backgroundImage = 'url(img/' + imgArr[this.index] + ')';
+					num = this.index;
+				};
+			}
+			
+			//鼠标在每个圆点添加缩略图
+			for (var i = 0; i < lis.length; i++) {
+				lis[i].index = i;
+				lis[i].onmouseover = function(){
+					//将所有的缩略图隐藏
+					for (var j=0;j<lis.length;j++) {
+						spanImg[j].style.display = "none";
+					}
+					//将当前的缩略图显示
+					spanImg[this.index].style.display = "block";
+					spanImg[this.index].style.backgroundImage = 'url(img/' + imgArr[this.index] + ')';
+				};
+				//鼠标离开每个圆点隐藏缩略图
+				lis[i].onmouseout = function(){
+					for (var j=0;j<lis.length;j++) {
+						spanImg[j].style.display = "none";
+					}
+				};
+			}
+		</script>
+	</body>
+
+</html>
