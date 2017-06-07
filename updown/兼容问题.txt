@@ -1,0 +1,261 @@
+jQuery和bootstrap网站占据前端行业的绝大部分，他们的辉煌延续到了现在，包括我自己有时候做静态页面或者响应式也会用到它们，但是对于找前端工作，懂不懂三大框架仍是决定性因素，希望这份分析数据不要误导前端新人认为有那么多jQuery开发者，学会jQuery就很容易找工作了，我认识的那些最近经历过面试的人中，都说那些面试官会问会不会react、vue、angular，
+
+
+
+兼容问题
+当盒子高度小于12px时(比如用盒子做边框) 在IE6中  
+加上font-size:0,属性.
+
+resize:none 是textarea的特有属性  防止用户拖动右下角
+
+overflow:hidden清除浮动属性,在IE6中加上
+_zoom:1属性.才有效果.
+
+当出现连续浮动的元素,携带和浮动方向一样的margin时,第一个元素将出现双倍margin.
+解决方法:浮动方向和margin方向相反.
+
+  text-indent:2em  (首行缩进)
+
+font:14px/24px "宋体";
+font:14px/200% "宋体";(百分比写法,效果一样)
+分别表示
+font-size:14px
+line-height:24px
+font-family:"宋体"
+
+多写即备选字体:
+font-family:"宋体","微软雅黑";
+
+伪类四个属性
+a:link  表示用户没有点击过的样式
+a:visited 表示用户访问过后的样式
+a:hover   表示鼠标划上去时的样式
+a:active  表示点击不松手的样式
+顺序不能改变.
+
+love hate  爱恨准则  l v h a
+
+所有关于文字样式类的写在伪类里  关于a的样式的写在a标签里
+
+背景图不动,字体动
+background-attachment:fixed.
+
+标题栏图标添加方式
+<link rel="shortcut icon" href="favicon.ico"/>
+
+logo一般在根目录下,后缀名不变
+比如www.taobao.com/favicon.ico
+
+txt.focus  自动获得焦点
+txt.select()  获得焦点并且选中所有内容
+
+当点击label的文字的时候  光标也能回到input里
+<input id = "txt"/>
+<label for ="txt">请输入用户名</label>
+
+oninput 输入内容时触发
+(IE6,7,8里不i兼容 用onpropertychange)
+
+switch语句
+switch(A)
+{
+	case "苹果":
+		alert(ssss)
+		break;
+	case "苹果":
+		alert(aaaaa)
+		break;
+	default:
+		alert(bbbbb)
+}
+
+
+
+<select>
+	<option value="1">春意绵绵</option>
+</select>
+表单索引值用this.value即可
+
+下拉菜单的事件:
+xxx.onchange = function(){}
+
+数组方法
+push()向数组末尾添加一个或多个元素 并返回新的长度
+var arr = [1,3,5];
+arr.push(7,9)
+
+console.log(arr)   //控制台输出[1,3,5,7,9]
+console.log(arr.push(7,9))  //控制台输出 5 (数组长度)
+
+
+
+unshift()
+从数组的前面放入一个或多个元素,!!!并返回新的长度!!!
+var arr = [1,3,5];
+arr.unshift(7,9)
+
+删除数组内容
+pop() 删除数组最后一个元素  !!!!返回最后一个值!!!!
+var arr = [1,3,5]
+arr.pop();
+
+shift()删除数组第一个元素  返回第一个值 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~添加返回新的长度,删除返回删除值~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+连接数组
+concat()  连接数组 
+var aa = [1,3,5]  var bb = ["a","b","c"]
+aa.concat(bb)   返回结果[]1,3,5,"a","b","c"]
+
+join()把数组转换为字符串
+ 数组名.join(符号)
+var txt = ["aa","bb","cc"]
+console.log(txt.join("-"))   //输出 aa-bb-cc 字符串
+但数组本身不会被改变 
+
+split()把字符串转换为数组
+var txt = "aa,bb,cc"
+console.log(txt.split(","))    输出["aa","bb","cc"]
+
+
+
+<________________________________DOM_________________________>
+aaa.parentNode 父级节点
+nextElementSibling  下一个兄弟节点
+previousElementSibiling   上一个兄弟节点
+
+IE兼容的
+nextSibling  下一个兄弟节点
+previousSibiling   上一个兄弟节点
+
+var div = one.nextElementSibling || one.nextSibling;
+div.style.backgroundColor = "red";
+必须先写正常浏览器再写IE兼容的.
+
+firstChild  第一个孩子    IE678
+lastChild    最后一个孩子
+
+firstElementChild  第一个孩子  
+lastElementChild    最后一个孩子
+
+
+子节点(重点)
+childNodes   选出全部的孩子(包括所有节点 如换行)
+ nodeType == 1时才是表示元素节点
+
+if (div.childNodes[i].nodeType == 1){
+	div.childNodes[i].style.backgroundColor = "red";
+}
+
+children  很好用   选取所有的孩子  只包括元素节点.
+但是在IE6,7,8里包含注释节点.
+
+<________________________________DOM_______________________>
+DOM节点操作
+新建节点  插入节点  删除节点  克隆节点
+
+新建
+var li = document.creatElement("li")  新建一个li节点
+
+插入
+xxx.appendChild(li);    添加孩子 放入盒子最后面
+insertBefore 两个参数(插入的节点,参照节点)
+demo.insertBefore (test,childrens[0]) 在demo中将test节点插入到childrens[0]前面
+如果第二个参数为null,则默认放到最后面
+
+删除
+demo.removeChild("li")
+
+克隆
+cloneNode() 
+括号里可以跟参数,如果是true 包括子节点 
+		如果是false  不包括子节点
+		默认为false.
+div.cloneNode() 表示把div克隆一下.
+
+
+
+
+获取节点属性
+demo.getAttribute("id")
+设置属性
+demo.setAttribute("属性","值")
+删除属性
+demo.removeAttribute("属性")
+
+var endTime = new Date("2015/12/12 17:30:00")如果括号里没有写日期 就是当前时间
+
+button  
+ btn.disabled = true;按钮变灰色 不可用(验证码)
+
+单标签改内容用value   双标签用innerHTML
+
+window.location.href = "www.baidu.com"  跳转页面
+
+函数自己调用自己  递归调用  (要有退出条件)
+
+arguments.callee 返回的是正在执行的函数,在函数体内使用
+在是哟个函数递归调用的时候 用arguments.callee代替函数名本身.
+
+charAt 获取相应位置字符(参数:字符位置)
+比如 var txt = "12345"
+txt.charAt(3) = 4.
+
+indexof("d") 根据字符返回位置   返回d在字符串中的位置
+lastindexof("d") 从后面根据字符返回位置  同样返回d在字符串中的位置  
+
+charCodeAt 获取相应位置unicode编码
+
+concat()连接字符串
+div1.innerHTML.concat(div2.innerHTML) 意思就是把div1的内容和div2的内容连接
+
+substr(起始位置,取的个数) 不写个数 默认为取到最后一位
+写个数即是从起始位置往后数6个.
+
+slice()
+txt.slice(开始位置,[结束位置]) 如果不写结束位置就从起始截取到最后
+txt.slice(3,6)从第3个开始 取到索引号6的字符串(不包含6)
+txt.slice(-1) 如果是负数  从右向左取.
+
+toUpperCase()转换为大写
+toLowerCase()转换为小写
+
+vertical-align:top;取消图片底部3像素距离
+
+offsetleft  	对象的左边
+offsettop	对象的顶部
+offsetwidth	对象的宽度
+offsetheight	对象的长度
+offsetPatent 返回对象的父级(带有定位)
+和parentNode的区别(必须是亲生父级)
+
+鼠标按下和鼠标移动是相辅相成的
+obj.onmousedown = function(){
+	obj.onmousemove = function(){
+	}
+}
+
+document.selection.empty()   (IE中禁止选中字体继续移动 )
+
+scrollTop    往上卷去的头部
+window.onscroll = function(){}屏幕滚动事件
+window.onresize = function(){}改变窗口事件  (响应式)
+
+谷歌
+wodument.body.scrollTop  
+火狐和其他
+document.documentElement.scrollTop
+最新浏览器
+window.pageXOoffset;
+
+scrollLeft   
+
+var json = {width:100px;height:100px}
+songsole.log(json.width)
+使用方法:json.属性
+
+scrollTo(x,y)  方法可把内容滚动到指定的坐标
+
+scrollWidth  width+padding+border
+clientWidth   不包含border
